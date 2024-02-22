@@ -4,23 +4,46 @@ import React from 'react'
 function TaskList(props) {
   return (
     <div  className="  pendingTask rounded-pill d-flex justify-content-between align-items-center mt-3 ">
-    <p className=" mt-1 mb-1 mr-1 {if(props.todo.status)} text-dark fw-bold  pl-3" style={{paddingLeft: '1rem', overflow:'hidden' , textOverflow:'ellipsis'}}> {props.todo.text}</p>
+    <p className=" mt-1 mb-1 mr-1 {if(props.todo.status)} text-dark fw-bold  pl-3" style={{paddingLeft: '1rem', overflow:'hidden' , textOverflow:'ellipsis'}}> {props.toDo.text}</p>
     <div className='d-flex'>
     <div style={{backgroundColor:'green'}} className="rounded-circle m-1" >
       <i className="fas fa-check m-2 text-white fs-5" onClick={()=>{
       console.log(props.toDos)
         props.setToDos(props.toDos.filter(obj=>{
-            if(obj.id === props.todo.id ){
-                obj.status = !props.todo.status;
+            if(obj.id === props.toDo.id ){
+                obj.status = !props.toDo.status;
             }
             return obj
         }))
     
-    }} value={props.todo.id}></i>
+    }} value={props.toDo.id}></i>
+    </div>
+    <div style={{backgroundColor:'blue'}} className="rounded-circle m-1">
+    <i className="fas fa-pencil-alt m-2 text-white fs-5 " 
+    onClick={()=>{
+        props.setToDo(props.toDo.text)
+        props.setToDos(props.toDos.filter((obj)=>{
+            if(obj.id === props.toDo.id){
+                return null
+            }
+            return obj;
+        }))
+
+    }}
+    ></i>
     </div>
     <div style={{backgroundColor:'red'}} className="rounded-circle m-1">
-      <i className="fas fa-trash-alt m-2 text-white fs-5"></i>
-    </div>
+          <i className="fas fa-trash-alt m-2 text-white fs-5" onClick={()=>{
+            props.setToDos(props.toDos.filter((obj)=>{
+                if(obj.id !== props.toDo.id){
+                    return obj
+                }
+                return null;
+            }))
+            console.log(props.toDos)
+
+          }}></i>
+        </div>
     </div>
 </div>
   )
@@ -37,7 +60,7 @@ function Time(props){
 function CompletedTaskList(props){
     return(
         <div  className=" completedTask rounded-pill d-flex justify-content-between align-items-center mt-3 ">
-        <p className=" mt-1 mb-1 mr-1  text-dark fw-bold  pl-3" style={{paddingLeft: '1rem', overflow:'hidden' , textDecoration:'line-through' ,textOverflow:'ellipsis'}}> {props.todo.text}.</p>
+        <p className=" mt-1 mb-1 mr-1  text-dark fw-bold  pl-3" style={{paddingLeft: '1rem', overflow:'hidden' , textDecoration:'line-through' ,textOverflow:'ellipsis'}}> {props.toDo.text}.</p>
         <div className='d-flex'>
         {/* <div style={{backgroundColor:'orange'}} className="rounded-circle m-1" >
           <i className="fas fa-check m-2 text-white fs-5" onClick={()=>{
@@ -54,7 +77,7 @@ function CompletedTaskList(props){
         <div style={{backgroundColor:'red'}} className="rounded-circle m-1">
           <i className="fas fa-trash-alt m-2 text-white fs-5" onClick={()=>{
             props.setToDos(props.toDos.filter((obj)=>{
-                if(obj.id !== props.todo.id){
+                if(obj.id !== props.toDo.id){
                     return obj
                 }
                 return null;
@@ -71,7 +94,7 @@ function CompletedTaskList(props){
 //Functio to display only the Day
 function Day(){
         const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const emojis = ['🌞', '🌝', '🌟', '🌈', '☁️', '🌧️', '❄️']; 
+        const emojis = [ '🌝', '🌟', '🌈', '☁️','🌞', '🌧️', '❄️']; 
         const date = new Date();
         const dayIndex = date.getDay();
         const dayName = dayNames[dayIndex];

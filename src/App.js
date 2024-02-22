@@ -32,9 +32,10 @@ function App() {
 
                 <TaskList 
                  key={index} 
-                todo={todo} 
+                toDo={todo} 
                 setToDos={setToDos} 
-                toDos={toDos} />  
+                toDos={toDos}
+                setToDo ={setToDo} />  
               )
             }
             return null
@@ -50,7 +51,7 @@ function App() {
                 return (
                   <CompletedTaskList 
                   key={index} 
-                 todo={obj} 
+                 toDo={obj} 
                  setToDos={setToDos} 
                  toDos={toDos} /> 
                 )
